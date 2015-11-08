@@ -34,3 +34,7 @@ body {
 .icon-block .material-icons {
 	font-size: inherit;
 }
+
+.dropdown-content li>a, .dropdown-content li>span {
+    color: #8BC34A;
+}
