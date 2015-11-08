@@ -1,44 +1,51 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="section no-pad-bot" id="index-banner">
+<div class="section" id="index-banner">
     <div class="container">
-        <br><br>
+        <div class="row">
+            <div class="col s12 m9 l10">
+                <form class="col s12 m6">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">query_builder</i>
+                            <input disabled value="{{ timestamp|datetime }}" id="timestamp" type="text"
+                                   class="validate">
+                            <label for="timestamp">Timestamp</label>
+                        </div>
+                    </div>
 
-        <h1 class="header center orange-text">Trash Manager</h1>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input value="Seri Resort" id="customer" type="text" class="validate">
+                            <label for="customer">Customer / Resort</label>
+                        </div>
+                    </div>
 
-        <div class="row center">
-            <h5 class="header col s12 light">Making Gili Meno clean</h5>
-        </div>
-        <div class="row center">
-            <a href="http://materializecss.com/getting-started.html" id="download-button"
-               class="btn-large waves-effect waves-light orange">Get Started</a>
-        </div>
-        <br><br>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">view_module</i>
+                            <select id="boxes">
+                                <option value="" disabled selected>Select</option>
+                                <option value="1">1 box</option>
+                                <option value="2">2 boxes</option>
+                                <option value="3">3 boxes</option>
+                                <option value="4">4 boxes</option>
+                            </select>
+                            <label for="boxes">Boxes of trash</label>
+                        </div>
+                    </div>
 
-        <form>
-         <div class="row">
-            <div class="input-field col s6">
-
-            <p>{{ timestamp|datetime }}</p>
-
-            <p>Seri Resort</p>
-
-            <label for="boxes">Boxes</label>
-            <select id="boxes" name="boxes">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
-
-            <br>
-            <button>Confirm</button>
-
-              <input value="Alvin" id="first_name2" type="text" class="validate">
-              <label class="active" for="first_name2">First Name</label>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <button class="btn waves-effect waves-light btn-large light-green" type="submit" name="action">Confirm
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-          </div>
-        </form>
+        </div>
     </div>
 </div>
 {% endblock %}

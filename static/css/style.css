@@ -3,6 +3,23 @@ body {
     font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
 }
 
+.input-field label {
+    /*font-size: 2em;*/
+}
+
+.input-field .prefix ~ .select-wrapper {
+    margin-left: 3rem;
+    width: 92%;
+    width: calc(100% - 3rem);
+}
+
+#logo-container.brand-logo {
+    height: 48px;
+    /*background-size: 48px;
+    background: url("/images/trashcan.svg") no-repeat;
+    padding-left: 64px;*/
+}
+
 .icon {
     background-size: 48px;
     background: url("/images/trashcan.svg") no-repeat;
