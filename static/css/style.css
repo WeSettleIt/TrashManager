@@ -1,0 +1,19 @@
+body {
+    /*background-color: #B7C25A;*/
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+}
+
+.icon {
+    background-size: 48px;
+    background: url("/images/trashcan.svg") no-repeat;
+    padding-left: 64px;
+    padding-top: 8px;
+    height: 48px;
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+        <br><br>
+
+        <h1 class="header center orange-text">Trash Manager</h1>
+
+        <div class="row center">
+            <h5 class="header col s12 light">Making Gili Meno clean</h5>
+        </div>
+        <div class="row center">
+            <a href="http://materializecss.com/getting-started.html" id="download-button"
+               class="btn-large waves-effect waves-light orange">Get Started</a>
+        </div>
+        <br><br>
+
+        <form>
+         <div class="row">
+            <div class="input-field col s6">
+
+            <p>{{ timestamp|datetime }}</p>
+
+            <p>Seri Resort</p>
+
+            <label for="boxes">Boxes</label>
+            <select id="boxes" name="boxes">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+
+            <br>
+            <button>Confirm</button>
+
+              <input value="Alvin" id="first_name2" type="text" class="validate">
+              <label class="active" for="first_name2">First Name</label>
+            </div>
+          </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
