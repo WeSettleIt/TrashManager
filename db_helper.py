@@ -25,6 +25,12 @@ def query(query, args=(), one=False):
     return (rv[0] if rv else None) if one else rv
 
 
+def execute(query, args=()):
+    db = get_db()
+    db.execute(query, args)
+    db.commit()
+
+
 def init_db(app):
     with app.app_context():
         db = get_db()

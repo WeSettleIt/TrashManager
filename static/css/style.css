@@ -36,5 +36,9 @@ body {
 }
 
 .dropdown-content li>a, .dropdown-content li>span {
-    color: #8BC34A;
+    color: #5f8e45;
+}
+
+i.material-icons {
+    line-height: inherit;
 }
