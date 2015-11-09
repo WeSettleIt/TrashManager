@@ -5,8 +5,6 @@ from flask.ext.babel import Babel, format_datetime
 import db_helper
 import flask.ext.login as flask_login
 
-users = {'foo@bar.tld': {'pw': 'secret'}}
-
 app = Flask(__name__)
 
 app.config.from_pyfile('trash-manager.cfg')
@@ -55,10 +53,10 @@ def report():
         db_helper.execute('INSERT INTO reports (customer_id, units, datetime) VALUES (?, ?, CURRENT_TIMESTAMP)', [customer_id, units])
         customer_name = db_helper.query('SELECT name FROM customers WHERE id = ?', [customer_id])[0].get('name')
         session['message'] = "Added %s units to %s" % (units, customer_name)
-        return redirect(url_for('index'))
+        return redirect(url_for('report'))
     else:
         session['error'] = "Both customer and units must be chosen"
-        return redirect(url_for('index'))
+        return redirect(url_for('report'))
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -67,11 +65,15 @@ def login():
         return render_template('login.html')
 
     email = request.form['email']
-    if users.get(email):
-        user = User()
-        user.id = email
+    user = user_loader(email)
+    if user:
         flask_login.login_user(user)
-        return redirect(url_for('protected'))
+        role = user.get_role()
+        print("Role:", role)
+        if role == 3:
+            return redirect(url_for('report'))
+        else:
+            return redirect(url_for('protected'))
 
     return render_template('login.html', error="User does not exist")
 
@@ -88,31 +90,35 @@ def unauthorized_handler():
 
 
 class User(flask_login.UserMixin):
+    def get_role(self):
+        role = db_helper.query('SELECT role FROM users WHERE username = ?', [self.get_id()], one=True).get("role")
+        return role
     pass
 
 
 @login_manager.user_loader
 def user_loader(email):
-    if email not in users:
+    print("e-mail", email)
+    db_user = db_helper.query('SELECT * FROM users WHERE username = ?', [email], one=True)
+    print("DB user", db_user)
+    if not db_user:
         return
 
     user = User()
-    user.id = email
+    user.id = db_user.get('username')
     return user
 
 
 @login_manager.request_loader
 def request_loader(request):
     email = request.form.get('email')
-    if email not in users:
+    user = user_loader(email)
+    if not user:
         return
-
-    user = User()
-    user.id = email
 
     # DO NOT ever store passwords in plaintext and always compare password
     # hashes using constant-time comparison!
-    user.is_authenticated = request.form['pw'] == users[email]['pw']
+    user.is_authenticated = True
 
     return user
 
