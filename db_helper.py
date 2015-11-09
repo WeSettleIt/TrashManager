@@ -1,8 +1,8 @@
 from flask import g
 import sqlite3
-import config
+from main import app
 
-DATABASE = config.DATABASE_URI
+DATABASE = app.config['DATABASE_URI']
 
 
 def get_db():
