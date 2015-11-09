@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from flask import Flask, g, render_template, request, url_for, redirect, session
-from flask.ext import login
 from flask.ext.babel import Babel, format_datetime
 import db_helper
 import flask.ext.login as flask_login
@@ -28,14 +27,7 @@ def close_connection(exception):
 
 @app.route("/")
 def index():
-    context = {
-        'timestamp': datetime.now(),
-        'customers': db_helper.query('SELECT * FROM customers ORDER BY name'),
-        'message': session.pop('message') if 'message' in session else None,
-        'error': session.pop('error') if 'error' in session else None
-    }
-
-    return render_template('index.html', **context)
+    return render_template('index.html')
 
 
 @app.route("/customers")
@@ -44,8 +36,18 @@ def get_customers():
     return str(customers)
 
 
-@app.route("/report", methods=['POST'])
+@app.route("/report", methods=['GET', 'POST'])
 def report():
+    if request.method == 'GET':
+        context = {
+            'timestamp': datetime.now(),
+            'customers': db_helper.query('SELECT * FROM customers ORDER BY name'),
+            'message': session.pop('message') if 'message' in session else None,
+            'error': session.pop('error') if 'error' in session else None
+        }
+
+        return render_template('report-create.html', **context)
+
     customer_id = request.form['customer-id']
     units = request.form['units']
 
@@ -72,6 +74,17 @@ def login():
         return redirect(url_for('protected'))
 
     return render_template('login.html', error="User does not exist")
+
+
+@app.route('/logout')
+def logout():
+    flask_login.logout_user()
+    return redirect(url_for('index'))
+
+
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    render_template('login.html', error="User does not exist")
 
 
 class User(flask_login.UserMixin):
@@ -103,22 +116,22 @@ def request_loader(request):
 
     return user
 
-@app.route('/protected', methods=['GET', 'POST'])
+@app.route('/reports', methods=['GET', 'POST'])
 @flask_login.login_required
 def protected():
     context = {
         'customers': db_helper.query('SELECT * FROM customers ORDER BY name')
     }
     if request.method == 'GET':
-        return render_template('protected.html', **context)
+        return render_template('report-list.html', **context)
 
     customer_id = request.form['customer-id']
     context['reports'] = db_helper.query('SELECT * FROM reports WHERE customer_id = ? ORDER BY datetime DESC', [customer_id])
     meta = db_helper.query('SELECT COUNT(1) AS count, SUM(units) as total FROM reports WHERE customer_id = ?', [customer_id])[0]
     context['total'] = meta.get("total")
     context['count'] = meta.get("count")
-    print(customer_id, context['total'], context['reports'])
-    return render_template('protected.html', **context)
+
+    return render_template('report-list.html', **context)
 
 
 @app.route('/<path:path>')

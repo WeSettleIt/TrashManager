@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Reports - Create{% endblock %}
+{% block content %}
+<div class="section" id="index-banner">
+    <div class="container">
+        {% if error %}
+        <div class="row">
+            <div class="col s12 offset-s1">
+                <div class="chip red">
+                    <span class="white-text">{{ error }}</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if message %}
+        <div class="row">
+            <div class="col s12 offset-s1">
+                <div class="chip light-green">
+                    <span class="white-text">{{ message }}</span>
+                    <i class="material-icons">close</i>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="row">
+            <div class="col s12">
+                <form class="col s12 m8 l6" action="/report" method="post">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">account_circle</i>
+                            <select id="customer-id" name="customer-id" required>
+                                <option value="" disabled selected>Select</option>
+                                {% for customer in customers %}
+                                <option value="{{ customer.id }}">{{ customer.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="customer-id">Customer / Resort</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">view_module</i>
+                            <select id="units" name="units" required>
+                                <option value="" disabled selected>Select</option>
+                                <option value="1">1 unit</option>
+                                <option value="2">2 units</option>
+                                <option value="3">3 units</option>
+                                <option value="4">4 units</option>
+                            </select>
+                            <label for="units">Units of trash</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <button class="btn waves-effect waves-light btn-large light-green right"
+                                    type="submit" name="action">Save
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
