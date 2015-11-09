@@ -11,42 +11,7 @@
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-<nav class="light-green lighten-1" role="navigation">
-    <div class="nav-wrapper container">
-        <a id="logo-container" href="/" class="brand-logo">Trash Manager</a>
-        <ul class="right hide-on-med-and-down">
-            {% if current_user.is_authenticated %}
-                {% if current_user.can_create_report() %}
-                <li><a href="/report">Create Report</a></li>
-                {% endif %}
-                {% if current_user.can_list_reports() %}
-                <li><a href="/reports">List Reports</a></li>
-                {% endif %}
-                <li><a href="/logout">Logout</a></li>
-            {% else %}
-                <li><a href="/login">Login</a></li>
-            {% endif %}
-        </ul>
-
-        <ul id="nav-mobile" class="side-nav">
-            <li><h3 class="light-green-text">Menu</h3></li>
-            <li class="bold"><a href="/" class="waves-effect waves-green"><i class="material-icons left">home</i>Home</a></li>
-            {% if current_user.is_authenticated %}
-                {% if current_user.can_create_report() %}
-                <li class="bold"><a href="/report" class="waves-effect waves-green"><i class="material-icons left">add_note</i>Reports</a></li>
-                {% endif %}
-                {% if current_user.can_list_reports() %}
-                <li class="bold"><a href="/reports" class="waves-effect waves-green"><i class="material-icons left">description</i>Reports</a></li>
-                {% endif %}
-                <li class="bold"><a href="/logout" class="waves-effect waves-green"><i class="material-icons left">lock_outline</i>Logout</a></li>
-                <li><a><i class="material-icons left">perm_identity</i>{{ current_user.id }}</a></li>
-            {% else %}
-                <li class="bold"><a href="/login" class="waves-effect waves-green"><i class="material-icons left">lock_open</i>Login</a></li>
-            {% endif %}
-        </ul>
-        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-    </div>
-</nav>
+{% include 'navigation.html' %}
 
 {% block content %}{% endblock %}
 

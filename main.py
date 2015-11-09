@@ -141,6 +141,7 @@ def request_loader(request):
 
     return user
 
+
 @app.route('/reports', methods=['GET', 'POST'])
 @flask_login.login_required
 def protected():
