@@ -7,7 +7,8 @@ import flask.ext.login as flask_login
 
 app = Flask(__name__)
 
-app.config.from_pyfile('trash-manager.cfg')
+app.config.from_pyfile('config.py')
+app.config.from_envvar('TRASHMANAGER_SETTINGS')
 babel = Babel(app)
 
 login_manager = flask_login.LoginManager()

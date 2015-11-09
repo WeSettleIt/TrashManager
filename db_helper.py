@@ -1,7 +1,8 @@
 from flask import g
 import sqlite3
+import config
 
-DATABASE = 'trash-manager.db'
+DATABASE = config.DATABASE_URI
 
 
 def get_db():
