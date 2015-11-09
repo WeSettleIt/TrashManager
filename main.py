@@ -55,7 +55,7 @@ def report():
     units = request.form['units']
 
     if customer_id and units:
-        db_helper.execute('INSERT INTO reports (customer_id, units, datetime) VALUES (?, ?, CURRENT_TIMESTAMP)', [customer_id, units])
+        db_helper.execute('INSERT INTO reports (customer_id, units, datetime) VALUES (?, ?, datetime(CURRENT_TIMESTAMP,"localtime"))', [customer_id, units])
         customer_name = db_helper.query('SELECT name FROM customers WHERE id = ?', [customer_id])[0].get('name')
         session['message'] = "Added %s units to %s" % (units, customer_name)
         return redirect(url_for('report'))

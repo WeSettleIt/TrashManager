@@ -47,12 +47,6 @@ i.material-icons {
     line-height: inherit;
 }
 
-@media only screen and (min-width: 993px) {
-    #logo-container {
-        margin-left: 3.4rem;
-    }
-}
-
 @media only screen and (max-width: 600px) {
     #toast-container {
         min-width: 100%;
