@@ -42,3 +42,9 @@ body {
 i.material-icons {
     line-height: inherit;
 }
+
+@media only screen and (min-width: 993px) {
+    #logo-container {
+        margin-left: 3.4rem;
+    }
+}

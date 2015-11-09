@@ -69,12 +69,7 @@ def login():
     user = user_loader(email)
     if user:
         flask_login.login_user(user)
-        role = user.get_role()
-        print("Role:", role)
-        if role == 3:
-            return redirect(url_for('report'))
-        else:
-            return redirect(url_for('protected'))
+        return redirect(user.get_default_page())
 
     return render_template('login.html', error="User does not exist")
 
@@ -91,22 +86,45 @@ def unauthorized_handler():
 
 
 class User(flask_login.UserMixin):
-    def get_role(self):
-        role = db_helper.query('SELECT role FROM users WHERE username = ?', [self.get_id()], one=True).get("role")
-        return role
+    role = None
+
+    def get_default_page(self):
+        if self.role == 3:
+            return url_for('report')
+        else:
+            return url_for('protected')
+
+    def can_administrate(self):
+        return True if self.role in [0] else False
+
+    def can_create_report(self):
+        return True if self.role in [0, 3] else False
+
+    def can_list_reports(self):
+        return True if self.role in [0, 1, 2] else False
+
+    def can_list_all_reports(self):
+        return True if self.role in [0, 1] else False
+
+    def can_list_own_reports(self):
+        return True if self.role in [2] else False
+
+    def can_collect_money(self):
+        return True if self.role in [0, 4] else False
+
     pass
 
 
 @login_manager.user_loader
 def user_loader(email):
-    print("e-mail", email)
     db_user = db_helper.query('SELECT * FROM users WHERE username = ?', [email], one=True)
-    print("DB user", db_user)
     if not db_user:
         return
 
     user = User()
     user.id = db_user.get('username')
+    user.role = db_user.get('role')
+    user.customer_id = db_user.get('customer_id')
     return user
 
 
