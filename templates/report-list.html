@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 {% block title %}Reports - List{% endblock %}
+{% if message %}
+{% block script %}
+Materialize.toast("{{ message }}", 4000);
+{% endblock %}
+{% endif %}
 {% block content %}
 <div class="section" id="index-banner">
     <div class="container">
+        {% if current_user.can_list_all_reports() %}
         <div class="row">
             <div class="col s12">
                 <h2>Reports</h2>
@@ -34,36 +40,58 @@
                     </div>
                 </form>
             </div>
-            {% if reports %}
-            <div class="row">
-                <div class="col s12">
-                    <h3>Result</h3>
-                    <p><strong>Pickups:</strong> {{ count }}</p>
-                    <p><strong>Total units:</strong> {{ total }}</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12">
-                    <table class="striped">
-                        <thead>
-                            <tr>
-                                <th>Timestamp</th>
-                                <th>Units</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for report in reports %}
-                            <tr>
-                                <td>{{ report.datetime }}</td>
-                                <td>{{ report.units }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            {% endif %}
         </div>
+        {% endif %}
+        {% if reports %}
+        <div class="row">
+            <div class="col s12">
+                <h3>{{ customer_name }}</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s6">
+                <table>
+                    <tr>
+                        <th>Pickups:</th>
+                        <td>{{ count }}</td>
+                    </tr>
+                    <tr>
+                        <th>Total units:</th>
+                        <td>{{ total }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <table class="striped">
+                    <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Units</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for report in reports %}
+                    <tr>
+                        <td>{{ report.datetime }}</td>
+                        <td>{{ report.units }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% else %}
+        {% if not current_user.can_list_all_reports() %}
+        <div class="row">
+            <div class="col s12">
+                <h3>{{ customer_name }}</h3>
+                <h4>No reports to display</h4>
+            </div>
+        </div>
+        {% endif %}
+        {% endif %}
     </div>
 </div>
 {% endblock %}

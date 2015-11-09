@@ -21,11 +21,10 @@
                     class="material-icons left">home</i>Home</a></li>
             {% if current_user.is_authenticated %}
             {% if current_user.can_create_report() %}
-            <li class="bold"><a href="/report" class="waves-effect waves-green"><i
-                    class="material-icons left">add_note</i>Reports</a></li>
+            <li class="bold"><a href="/report" class="waves-effect waves-green"><i class="material-icons left">add_note</i>Create Reports</a></li>
             {% endif %}
             {% if current_user.can_list_reports() %}
-            <li class="bold"><a href="/reports" class="waves-effect waves-green"><i class="material-icons left">description</i>Reports</a>
+            <li class="bold"><a href="/reports" class="waves-effect waves-green"><i class="material-icons left">description</i>List Reports</a>
             </li>
             {% endif %}
             <li class="bold"><a href="/logout" class="waves-effect waves-green"><i class="material-icons left">lock_outline</i>Logout</a>

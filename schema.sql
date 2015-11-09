@@ -5,11 +5,13 @@ CREATE TABLE customers
 , email TEXT);
 
 INSERT INTO customers (name, email)
-VALUES ('Seri Resort', 'seri@gotling.se');
+VALUES ('Seri Resort', 'seri@e.mail');
 INSERT INTO customers (name, email)
-VALUES ('Ana Warung', 'anawarung@gotling.se');
+VALUES ('Ana Warung', 'ana@e.mail');
 INSERT INTO customers (name, email)
-VALUES ('Adeng-Adeng Bungalows', 'adeng-adeng@gotling.se');
+VALUES ('Adeng-Adeng Bungalows', 'aa@e.mail');
+INSERT INTO customers (name, email)
+VALUES ('Tropical Hideaways', 'tropical@e.mail');
 
 DROP TABLE reports;
 CREATE TABLE reports
@@ -28,19 +30,25 @@ CREATE TABLE users
 , customer_id INTEGER
 , FOREIGN KEY(customer_id) REFERENCES customers(id));
 
--- ROLE: 0: admin, 1: reporter, 2: customer, 3: trash-collector, 4: money-collector
+-- ROLE: 0: admin, 1: reports, 2: customer, 3: trash-collector, 4: money-collector
 
 INSERT INTO users (username, role)
 VALUES ('admin@e.mail', 0);
 
 INSERT INTO users (username, role)
-VALUES ('reporter@e.mail', 1);
+VALUES ('reports@e.mail', 1);
 
 INSERT INTO users (username, role, customer_id)
-VALUES ('seri@e.mail', 2, 0);
+VALUES ('seri@e.mail', 2, 1);
 
 INSERT INTO users (username, role, customer_id)
-VALUES ('ana@e.mail', 2, 1);
+VALUES ('ana@e.mail', 2, 2);
+
+INSERT INTO users (username, role, customer_id)
+VALUES ('aa@e.mail', 2, 3);
+
+INSERT INTO users (username, role, customer_id)
+VALUES ('tropical@e.mail', 2, 4);
 
 INSERT INTO users (username, role)
 VALUES ('trash@e.mail', 3);

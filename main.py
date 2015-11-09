@@ -4,6 +4,7 @@ from flask import Flask, g, render_template, request, url_for, redirect, session
 from flask.ext.babel import Babel, format_datetime
 import db_helper
 import flask.ext.login as flask_login
+from flask.ext.login import current_user
 
 app = Flask(__name__)
 
@@ -36,14 +37,17 @@ def get_customers():
 
 
 @app.route("/report", methods=['GET', 'POST'])
+@flask_login.login_required
 def report():
     if request.method == 'GET':
         context = {
             'timestamp': datetime.now(),
             'customers': db_helper.query('SELECT * FROM customers ORDER BY name'),
-            'message': session.pop('message') if 'message' in session else None,
-            'error': session.pop('error') if 'error' in session else None
         }
+        if 'message' in session:
+            context['message'] = session.pop('message')
+        if 'error' in session:
+            context['error'] = session.pop('error')
 
         return render_template('report-create.html', **context)
 
@@ -87,12 +91,13 @@ def unauthorized_handler():
 
 class User(flask_login.UserMixin):
     role = None
+    customer_id = None
 
     def get_default_page(self):
         if self.role == 3:
             return url_for('report')
         else:
-            return url_for('protected')
+            return url_for('reports')
 
     def can_administrate(self):
         return True if self.role in [0] else False
@@ -125,6 +130,7 @@ def user_loader(email):
     user.id = db_user.get('username')
     user.role = db_user.get('role')
     user.customer_id = db_user.get('customer_id')
+    print(user)
     return user
 
 
@@ -144,18 +150,28 @@ def request_loader(request):
 
 @app.route('/reports', methods=['GET', 'POST'])
 @flask_login.login_required
-def protected():
+def reports():
     context = {
         'customers': db_helper.query('SELECT * FROM customers ORDER BY name')
     }
-    if request.method == 'GET':
+    if request.method == 'GET' and current_user.can_list_all_reports():
         return render_template('report-list.html', **context)
 
-    customer_id = request.form['customer-id']
-    context['reports'] = db_helper.query('SELECT * FROM reports WHERE customer_id = ? ORDER BY datetime DESC', [customer_id])
-    meta = db_helper.query('SELECT COUNT(1) AS count, SUM(units) as total FROM reports WHERE customer_id = ?', [customer_id])[0]
+    if current_user.can_list_own_reports():
+        customer_id = current_user.customer_id
+    else:
+        customer_id = request.form['customer-id']
+
+    reports = db_helper.query('SELECT * FROM reports WHERE customer_id = ? ORDER BY datetime DESC', [customer_id])
+    meta = db_helper.query('SELECT COUNT(1) AS count, SUM(units) as total FROM reports WHERE customer_id = ?', [customer_id], one=True)
+    customer_name = db_helper.query('SELECT name FROM customers WHERE id = ?', [customer_id], one=True)
+    print(reports)
+    context['reports'] = reports
+    context['customer_name'] = customer_name.get("name")
     context['total'] = meta.get("total")
     context['count'] = meta.get("count")
+    if not len(reports):
+        context['message'] = "No reports to display"
 
     return render_template('report-list.html', **context)
 
