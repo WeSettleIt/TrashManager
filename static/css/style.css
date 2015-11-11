@@ -3,6 +3,10 @@ body {
     font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
 }
 
+h2, h3, h4 {
+    margin-bottom: 0;
+}
+
 strong {
     font-weight: bold;
 }
@@ -52,4 +56,13 @@ i.material-icons {
         min-width: 100%;
         top: 3rem;
     }
+}
+
+#toast-container {
+    left: 0;
+}
+
+.toast {
+    height: inherit;
+    width: 100%;
 }

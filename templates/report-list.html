@@ -16,7 +16,7 @@ $('html, body').animate({
 {% endif %}
 {% endblock %}
 {% block content %}
-<div class="section" id="index-banner">
+<div class="section" id="list">
     <div class="container">
         {% if current_user.can_list_all_reports() %}
         <div class="row">
@@ -28,6 +28,11 @@ $('html, body').animate({
             <div class="col s12">
                 <form class="col s12 m8 l6" action="/reports" method="post">
                     <div class="row">
+                        <div class="col s12">
+                            <p>Select customer / resort to show report.</p>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">account_circle</i>
                             <select id="customer-id" name="customer-id" required>
@@ -37,15 +42,6 @@ $('html, body').animate({
                                 {% endfor %}
                             </select>
                             <label for="customer-id">Customer / Resort</label>
-                        </div>
-
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <button class="btn waves-effect waves-light btn-large light-green right"
-                                        type="submit" name="action">Show
-                                    <i class="material-icons right">view_list</i>
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </form>
