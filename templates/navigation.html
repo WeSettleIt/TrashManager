@@ -4,10 +4,10 @@
         <ul class="right hide-on-med-and-down">
             {% if current_user.is_authenticated %}
             {% if current_user.can_create_report() %}
-            <li><a href="/report">Create Report</a></li>
+            <li><a href="/report">Collect</a></li>
             {% endif %}
             {% if current_user.can_list_reports() %}
-            <li><a href="/reports">List Reports</a></li>
+            <li><a href="/reports">List</a></li>
             {% endif %}
             <li><a href="/logout">Logout</a></li>
             {% else %}
@@ -21,10 +21,10 @@
                     class="material-icons left">home</i>Home</a></li>
             {% if current_user.is_authenticated %}
             {% if current_user.can_create_report() %}
-            <li class="bold"><a href="/report" class="waves-effect waves-green"><i class="material-icons left">add_note</i>Create Reports</a></li>
+            <li class="bold"><a href="/report" class="waves-effect waves-green"><i class="material-icons left">add_note</i>Collect</a></li>
             {% endif %}
             {% if current_user.can_list_reports() %}
-            <li class="bold"><a href="/reports" class="waves-effect waves-green"><i class="material-icons left">description</i>List Reports</a>
+            <li class="bold"><a href="/reports" class="waves-effect waves-green"><i class="material-icons left">description</i>List</a>
             </li>
             {% endif %}
             <li class="bold"><a href="/logout" class="waves-effect waves-green"><i class="material-icons left">lock_outline</i>Logout</a>

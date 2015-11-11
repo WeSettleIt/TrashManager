@@ -8,6 +8,7 @@
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/materialize.min.css') }}"
           media="screen,projection">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/material-icons.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/toastr.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -33,9 +34,9 @@
 
 <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
+<script type="text/javascript" src="js/toastr.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
-<script type="text/javascript">
-{% block script %}{% endblock %}
-</script>
+{% block script %}
+{% endblock %}
 </body>
 </html>

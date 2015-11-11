@@ -1,25 +1,32 @@
 {% extends "base.html" %}
 {% block title %}Reports - Create{% endblock %}
-{% if message %}
 {% block script %}
-Materialize.toast("{{ message }}", 5000);
-{% endblock %}
+{% if message %}
+<script type="text/javascript">
+    $(function () {
+        toastr.info('{{message}}');
+    });
+</script>
 {% endif %}
+{% if error %}
+<script type="text/javascript">
+    $(function () {
+        toastr.error('{{error}}');
+    });
+</script>
+{% endif %}
+{% endblock %}
 {% block content %}
 <div class="section" id="index-banner">
     <div class="container">
-        {% if error %}
-        <div class="row">
-            <div class="col s12 offset-s1">
-                <div class="chip red">
-                    <span class="white-text">{{ error }}</span>
-                </div>
-            </div>
-        </div>
-        {% endif %}
         <div class="row">
             <div class="col s12">
                 <form class="col s12 m8 l6" action="/report" method="post">
+                    <div class="row">
+                        <div class="col s12">
+                            <p>Select resort and amount of units collected.</p>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">account_circle</i>

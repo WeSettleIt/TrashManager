@@ -154,6 +154,7 @@ def reports():
     context = {
         'customers': db_helper.query('SELECT * FROM customers ORDER BY name')
     }
+    print("a message? '%s'" % context.get("message"))
     if request.method == 'GET' and current_user.can_list_all_reports():
         return render_template('report-list.html', **context)
 
@@ -165,7 +166,6 @@ def reports():
     reports = db_helper.query('SELECT * FROM reports WHERE customer_id = ? ORDER BY datetime DESC', [customer_id])
     meta = db_helper.query('SELECT COUNT(1) AS count, SUM(units) as total FROM reports WHERE customer_id = ?', [customer_id], one=True)
     customer_name = db_helper.query('SELECT name FROM customers WHERE id = ?', [customer_id], one=True)
-    print(reports)
     context['reports'] = reports
     context['customer_name'] = customer_name.get("name")
     context['total'] = meta.get("total")
