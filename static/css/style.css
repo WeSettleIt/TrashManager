@@ -58,6 +58,10 @@ i.material-icons {
     }
 }
 
+#toast-container.toast-top-full-width > div, #toast-container.toast-bottom-full-width > div {
+    width: 100%;
+}
+
 #toast-container {
     left: 0;
 }

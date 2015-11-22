@@ -33,25 +33,25 @@ CREATE TABLE users
 -- ROLE: 0: admin, 1: reports, 2: customer, 3: trash-collector, 4: money-collector
 
 INSERT INTO users (username, role)
-VALUES ('admin@e.mail', 0);
+VALUES ('admin', 0);
 
 INSERT INTO users (username, role)
-VALUES ('reports@e.mail', 1);
+VALUES ('reports', 1);
 
 INSERT INTO users (username, role, customer_id)
-VALUES ('seri@e.mail', 2, 1);
+VALUES ('seri', 2, 1);
 
 INSERT INTO users (username, role, customer_id)
-VALUES ('ana@e.mail', 2, 2);
+VALUES ('ana', 2, 2);
 
 INSERT INTO users (username, role, customer_id)
-VALUES ('aa@e.mail', 2, 3);
+VALUES ('aa', 2, 3);
 
 INSERT INTO users (username, role, customer_id)
-VALUES ('tropical@e.mail', 2, 4);
+VALUES ('tropical', 2, 4);
 
 INSERT INTO users (username, role)
-VALUES ('trash@e.mail', 3);
+VALUES ('trash', 3);
 
 INSERT INTO users (username, role)
-VALUES ('money@e.mail', 4);
+VALUES ('money', 4);

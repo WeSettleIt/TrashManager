@@ -26,3 +26,15 @@ import os
 
 os.environ['TRASHMANAGER_SETTINGS'] = "/home/trashmanager/data/config.py"
 ```
+
+## Database
+```
+sqlite3 my_database.sqlite < export.sqlite3.sql
+```
+
+or 
+
+```
+sqlite3> .read export.sqlite3.sql
+```
+
