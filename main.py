@@ -70,6 +70,7 @@ def login():
         return render_template('login.html')
 
     email = request.form['email']
+    email = email.lower() if email else None
     user = user_loader(email)
     if user:
         flask_login.login_user(user)
